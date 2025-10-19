@@ -1,0 +1,54 @@
+```markdown
+# 🌟 Light Seeker – The Path of Giving
+
+A minimal spiritual web game built with HTML, CSS and JavaScript.
+
+This static single-page game includes four scenes:
+1. Village — a monk asks if you will share your light.
+2. Marketplace — help a merchant set up a donation box.
+3. Temple — make a symbolic offering.
+4. Light — receive a blessing and see a UPI QR and copy-to-clipboard.
+
+Enhancements:
+- EN / हिन्दी language toggle
+- Feedback modal (EmailJS integration + mailto fallback)
+- Smooth scene transitions and UI animations
+
+Project structure
+- index.html
+- style.css
+- script.js
+- assets/
+  - upi-qr.png  (add your QR image here)
+- README.md
+- LICENSE
+- .gitignore
+
+Before publishing
+1. Replace the placeholder UPI ID in index.html (input#upiId value) with your real UPI ID.
+2. Put your QR image at assets/upi-qr.png (PNG or SVG).
+3. (Optional) Configure EmailJS: edit script.js and set EMAILJS_USER_ID, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID.
+
+Create & publish (quick commands)
+1. In your terminal (inside the project folder) run:
+   git init
+   git add .
+   git commit -m "Initial commit — Light Seeker"
+2. Create repo & push (using GitHub CLI):
+   gh repo create lightpath9-game --public --source=. --remote=origin --push
+   (replace --public with --private if needed)
+3. Enable Pages in the repo settings:
+   - Go to GitHub → Repo → Settings → Pages
+   - Source: main branch → /root → Save
+   - Site will be available at: https://<your-username>.github.io/lightpath9-game/
+
+If you don't use gh CLI:
+- Create a repo on github.com named lightpath9-game, then:
+  git remote add origin https://github.com/<your-username>/lightpath9-game.git
+  git branch -M main
+  git push -u origin main
+
+Notes
+- This project is static and easy to host on GitHub Pages or Netlify.
+- Do not publish sensitive credentials in script.js. Use EmailJS or a backend for secure email sending.
+```
