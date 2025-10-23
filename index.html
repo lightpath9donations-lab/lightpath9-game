@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Light Seeker — The Path of Giving</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app" id="app">
+    <header class="app-header" role="banner">
+      <div class="header-row">
+        <div>
+          <h1 class="title" data-i18n="title">Light Seeker</h1>
+          <p class="subtitle" data-i18n="subtitle">The Path of Giving</p>
+        </div>
+        <div class="controls-row">
+          <div class="lang-switch">
+            <button id="langEn" class="btn small active-lang" aria-pressed="true">EN</button>
+            <button id="langHi" class="btn small" aria-pressed="false">हिंदी</button>
+          </div>
+          <button id="feedbackOpen" class="btn small" aria-haspopup="dialog" title="Feedback">Feedback</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Scene: Village -->
+    <section class="scene visible" data-scene="village" aria-hidden="false">
+      <div class="card">
+        <h2 data-i18n="village_title">The Village</h2>
+        <p data-i18n="village_text">
+          A calm monk approaches you beside a lantern-lit lane. He asks softly,
+          "Will you share your light with those who need it?"
+        </p>
+        <div class="choices">
+          <button class="btn btn-primary" data-next="marketplace" data-note="shared" data-i18n="share">Share your light</button>
+          <button class="btn" data-next="marketplace" data-note="reflect" data-i18n="reflect">I will reflect first</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene: Marketplace -->
+    <section class="scene" data-scene="marketplace" hidden aria-hidden="true">
+      <div class="card">
+        <h2 data-i18n="market_title">The Marketplace</h2>
+        <p data-i18n="market_text">
+          A friendly merchant is setting up a small donation box near their stall
+          but needs an extra hand. Would you help arrange the box and write a blessing?
+        </p>
+
+        <div class="controls">
+          <label class="checkbox">
+            <input type="checkbox" id="boxSetup" />
+            <span data-i18n="help_box">Help set up the donation box</span>
+          </label>
+
+          <label for="blessing" class="sr-only" data-i18n="blessing_label">Write a blessing</label>
+          <textarea id="blessing" placeholder="Write a short blessing (optional)" data-i18n-placeholder="blessing_placeholder"></textarea>
+        </div>
+
+        <div class="choices">
+          <button class="btn btn-primary" data-next="temple" id="marketContinue" data-i18n="finish">Finish and continue</button>
+          <button class="btn" data-next="village" data-i18n="back">Go back</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene: Temple -->
+    <section class="scene" data-scene="temple" hidden aria-hidden="true">
+      <div class="card">
+        <h2 data-i18n="temple_title">The Temple</h2>
+        <p data-i18n="temple_text">
+          Within the temple you are invited to offer a symbolic donation — an
+          act of intention rather than amount. Choose what you offer.
+        </p>
+
+        <div class="donation-options" role="list">
+          <button class="btn" data-offer="prayer" role="listitem" data-i18n="offer_prayer">A prayer</button>
+          <button class="btn" data-offer="song" role="listitem" data-i18n="offer_song">A song</button>
+          <button class="btn" data-offer="seed" role="listitem" data-i18n="offer_seed">A seed</button>
+        </div>
+
+        <div class="summary" aria-live="polite"></div>
+
+        <div class="choices">
+          <button class="btn btn-primary" data-next="light" id="toLight" data-i18n="receive">Receive the blessing</button>
+          <button class="btn" data-next="marketplace" data-i18n="back_market">Back to market</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene: Light (final) -->
+    <section class="scene" data-scene="light" hidden aria-hidden="true">
+      <div class="card card-light">
+        <h2 data-i18n="light_title">The Light</h2>
+        <p class="blessing-text" data-i18n="light_text">You are bathed in warm light. The community thanks you for your intention.</p>
+
+        <div class="qr-area">
+          <div class="qr-wrap" aria-hidden="false">
+            <img src="assets/upi-qr.svg" alt="UPI QR code" class="qr-image" />
+          </div>
+
+          <div class="upi-info">
+            <label for="upiId" data-i18n="upi_label">UPI ID</label>
+            <div class="upi-row">
+              <input id="upiId" class="upi-input" readonly value="lightseeker@upi" aria-readonly="true" />
+              <button id="copyBtn" class="btn small" aria-live="polite" data-i18n="copy">Copy</button>
+            </div>
+            <p class="hint" data-i18n="upi_hint">Scan the QR to donate or copy the UPI ID. Thank you for your generosity.</p>
+          </div>
+        </div>
+
+        <div class="choices">
+          <button class="btn" id="restart" data-i18n="restart">Walk the path again</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="app-footer" role="contentinfo">
+      <small data-i18n="footer">Minimal spiritual UI — easy to host on GitHub Pages or Netlify</small>
+    </footer>
+  </main>
+
+  <!-- Feedback modal -->
+  <div id="feedbackModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" hidden>
+    <div class="modal-card">
+      <button id="feedbackClose" class="modal-close" aria-label="Close">✕</button>
+      <h3 data-i18n="feedback_title">Send feedback</h3>
+      <form id="feedbackForm">
+        <label for="fb-name" class="sr-only">Name</label>
+        <input id="fb-name" name="name" placeholder="Your name (optional)" />
+
+        <label for="fb-email" class="sr-only">Email</label>
+        <input id="fb-email" name="email" placeholder="Email (optional)" type="email" />
+
+        <label for="fb-message" class="sr-only">Message</label>
+        <textarea id="fb-message" name="message" placeholder="Your message" required></textarea>
+
+        <div class="modal-actions">
+          <button type="submit" id="fbSend" class="btn btn-primary" data-i18n="send">Send</button>
+          <button type="button" id="fbCancel" class="btn" data-i18n="cancel">Cancel</button>
+        </div>
+
+        <p class="small hint" id="fbNote" data-i18n="feedback_note">Feedback will be sent by email (requires EmailJS setup) or fallback to your mail client.</p>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
