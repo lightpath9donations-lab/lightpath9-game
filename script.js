@@ -108,7 +108,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const langHi = document.getElementById("langHi");
   let currentLang = "en";
   applyLanguage(currentLang);
+document.addEventListener("DOMContentLoaded", () => {
+  const buttons = document.querySelectorAll("button[data-next]");
+  const scenes = document.querySelectorAll(".scene");
 
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const nextScene = button.getAttribute("data-next");
+
+      scenes.forEach(scene => {
+        const sceneName = scene.getAttribute("data-scene");
+        if (sceneName === nextScene) {
+          scene.hidden = false;
+          scene.setAttribute("aria-hidden", "false");
+          scene.classList.add("visible");
+        } else {
+          scene.hidden = true;
+          scene.setAttribute("aria-hidden", "true");
+          scene.classList.remove("visible");
+        }
+      });
+    });
+  });
+});
   function setLang(lang) {
     currentLang = lang;
     applyLanguage(lang);
